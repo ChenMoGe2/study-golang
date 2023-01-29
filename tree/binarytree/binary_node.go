@@ -1,22 +1,13 @@
 package binarytree
 
-type BinaryTree struct {
-	root *Node
-}
-
-func NewBinaryTree(root *Node) *BinaryTree {
-	tree := &BinaryTree{root: root}
-	return tree
-}
-
-type Node struct {
-	left  *Node
-	right *Node
+type BinaryNode struct {
+	left  *BinaryNode
+	right *BinaryNode
 	data  interface{}
 }
 
-func NewNode(data interface{}, left, right *Node) *Node {
-	n := &Node{
+func NewBinaryNode(data interface{}, left, right *BinaryNode) *BinaryNode {
+	n := &BinaryNode{
 		left:  left,
 		right: right,
 		data:  data,
@@ -24,8 +15,22 @@ func NewNode(data interface{}, left, right *Node) *Node {
 	return n
 }
 
+func (n *BinaryNode) SetLeft(node *BinaryNode) {
+	if n == nil {
+		return
+	}
+	n.left = node
+}
+
+func (n *BinaryNode) SetRight(node *BinaryNode) {
+	if n == nil {
+		return
+	}
+	n.right = node
+}
+
 //先序-递归
-func (n *Node) Dlr(f func(n *Node)) {
+func (n *BinaryNode) Dlr(f func(n *BinaryNode)) {
 	if n == nil {
 		return
 	}
@@ -35,7 +40,7 @@ func (n *Node) Dlr(f func(n *Node)) {
 }
 
 //中序-递归
-func (n *Node) Ldr(f func(n *Node)) {
+func (n *BinaryNode) Ldr(f func(n *BinaryNode)) {
 	if n == nil {
 		return
 	}
@@ -45,7 +50,7 @@ func (n *Node) Ldr(f func(n *Node)) {
 }
 
 //后序-递归
-func (n *Node) Lrd(f func(n *Node)) {
+func (n *BinaryNode) Lrd(f func(n *BinaryNode)) {
 	if n == nil {
 		return
 	}
@@ -55,13 +60,13 @@ func (n *Node) Lrd(f func(n *Node)) {
 }
 
 //先序-非递归
-func (n *Node) LDlr(f func(n *Node)) {
+func (n *BinaryNode) LDlr(f func(n *BinaryNode)) {
 	if n == nil {
 		return
 	}
 	cur := n
-	rs := make([]*Node, 0)
-	stack := make([]*Node, 0)
+	rs := make([]*BinaryNode, 0)
+	stack := make([]*BinaryNode, 0)
 	for cur != nil || len(stack) > 0 {
 		for cur != nil {
 			rs = append(rs, cur)
@@ -77,13 +82,13 @@ func (n *Node) LDlr(f func(n *Node)) {
 }
 
 //中序-非递归
-func (n *Node) LLdr(f func(n *Node)) {
+func (n *BinaryNode) LLdr(f func(n *BinaryNode)) {
 	if n == nil {
 		return
 	}
 	cur := n
-	rs := make([]*Node, 0)
-	stack := make([]*Node, 0)
+	rs := make([]*BinaryNode, 0)
+	stack := make([]*BinaryNode, 0)
 	for cur != nil || len(stack) > 0 {
 		for cur != nil {
 			stack = append(stack, cur)
@@ -100,14 +105,14 @@ func (n *Node) LLdr(f func(n *Node)) {
 }
 
 //后序-非递归
-func (n *Node) LLrd(f func(n *Node)) {
+func (n *BinaryNode) LLrd(f func(n *BinaryNode)) {
 	if n == nil {
 		return
 	}
 	cur := n
-	var prev *Node
-	rs := make([]*Node, 0)
-	stack := make([]*Node, 0)
+	var prev *BinaryNode
+	rs := make([]*BinaryNode, 0)
+	stack := make([]*BinaryNode, 0)
 	for cur != nil || len(stack) > 0 {
 		for cur != nil {
 			stack = append(stack, cur)
